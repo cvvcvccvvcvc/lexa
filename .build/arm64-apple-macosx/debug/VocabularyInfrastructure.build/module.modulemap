@@ -1,4 +1,0 @@
-module VocabularyInfrastructure {
-    header "/Users/cvv/code/Life/VocabularyTracker/.build/arm64-apple-macosx/debug/VocabularyInfrastructure.build/VocabularyInfrastructure-Swift.h"
-    requires objc
-}

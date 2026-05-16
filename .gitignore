@@ -1,0 +1,8 @@
+# SwiftPM build output
+.build/
+
+# build-app.sh output (regenerated; source lives in Resources/ and Scripts/build-app.sh)
+Build/
+
+# macOS Finder metadata
+.DS_Store
