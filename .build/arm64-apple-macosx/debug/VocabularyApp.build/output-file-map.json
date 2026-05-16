@@ -1,0 +1,82 @@
+{
+  "": {
+    "swift-dependencies": "/Users/cvv/code/Life/VocabularyTracker/.build/arm64-apple-macosx/debug/VocabularyApp.build/master.swiftdeps"
+  },
+  "/Users/cvv/code/Life/VocabularyTracker/Sources/VocabularyApp/App/AppDelegate.swift": {
+    "dependencies": "/Users/cvv/code/Life/VocabularyTracker/.build/arm64-apple-macosx/debug/VocabularyApp.build/AppDelegate.d",
+    "object": "/Users/cvv/code/Life/VocabularyTracker/.build/arm64-apple-macosx/debug/VocabularyApp.build/AppDelegate.swift.o",
+    "swiftmodule": "/Users/cvv/code/Life/VocabularyTracker/.build/arm64-apple-macosx/debug/VocabularyApp.build/AppDelegate~partial.swiftmodule",
+    "swift-dependencies": "/Users/cvv/code/Life/VocabularyTracker/.build/arm64-apple-macosx/debug/VocabularyApp.build/AppDelegate.swiftdeps",
+    "diagnostics": "/Users/cvv/code/Life/VocabularyTracker/.build/arm64-apple-macosx/debug/VocabularyApp.build/AppDelegate.dia"
+  },
+  "/Users/cvv/code/Life/VocabularyTracker/Sources/VocabularyApp/App/AppRootView.swift": {
+    "dependencies": "/Users/cvv/code/Life/VocabularyTracker/.build/arm64-apple-macosx/debug/VocabularyApp.build/AppRootView.d",
+    "object": "/Users/cvv/code/Life/VocabularyTracker/.build/arm64-apple-macosx/debug/VocabularyApp.build/AppRootView.swift.o",
+    "swiftmodule": "/Users/cvv/code/Life/VocabularyTracker/.build/arm64-apple-macosx/debug/VocabularyApp.build/AppRootView~partial.swiftmodule",
+    "swift-dependencies": "/Users/cvv/code/Life/VocabularyTracker/.build/arm64-apple-macosx/debug/VocabularyApp.build/AppRootView.swiftdeps",
+    "diagnostics": "/Users/cvv/code/Life/VocabularyTracker/.build/arm64-apple-macosx/debug/VocabularyApp.build/AppRootView.dia"
+  },
+  "/Users/cvv/code/Life/VocabularyTracker/Sources/VocabularyApp/App/LexaDesign.swift": {
+    "dependencies": "/Users/cvv/code/Life/VocabularyTracker/.build/arm64-apple-macosx/debug/VocabularyApp.build/LexaDesign.d",
+    "object": "/Users/cvv/code/Life/VocabularyTracker/.build/arm64-apple-macosx/debug/VocabularyApp.build/LexaDesign.swift.o",
+    "swiftmodule": "/Users/cvv/code/Life/VocabularyTracker/.build/arm64-apple-macosx/debug/VocabularyApp.build/LexaDesign~partial.swiftmodule",
+    "swift-dependencies": "/Users/cvv/code/Life/VocabularyTracker/.build/arm64-apple-macosx/debug/VocabularyApp.build/LexaDesign.swiftdeps",
+    "diagnostics": "/Users/cvv/code/Life/VocabularyTracker/.build/arm64-apple-macosx/debug/VocabularyApp.build/LexaDesign.dia"
+  },
+  "/Users/cvv/code/Life/VocabularyTracker/Sources/VocabularyApp/App/LexaSidebar.swift": {
+    "dependencies": "/Users/cvv/code/Life/VocabularyTracker/.build/arm64-apple-macosx/debug/VocabularyApp.build/LexaSidebar.d",
+    "object": "/Users/cvv/code/Life/VocabularyTracker/.build/arm64-apple-macosx/debug/VocabularyApp.build/LexaSidebar.swift.o",
+    "swiftmodule": "/Users/cvv/code/Life/VocabularyTracker/.build/arm64-apple-macosx/debug/VocabularyApp.build/LexaSidebar~partial.swiftmodule",
+    "swift-dependencies": "/Users/cvv/code/Life/VocabularyTracker/.build/arm64-apple-macosx/debug/VocabularyApp.build/LexaSidebar.swiftdeps",
+    "diagnostics": "/Users/cvv/code/Life/VocabularyTracker/.build/arm64-apple-macosx/debug/VocabularyApp.build/LexaSidebar.dia"
+  },
+  "/Users/cvv/code/Life/VocabularyTracker/Sources/VocabularyApp/App/VocabularyTrackerApp.swift": {
+    "dependencies": "/Users/cvv/code/Life/VocabularyTracker/.build/arm64-apple-macosx/debug/VocabularyApp.build/VocabularyTrackerApp.d",
+    "object": "/Users/cvv/code/Life/VocabularyTracker/.build/arm64-apple-macosx/debug/VocabularyApp.build/VocabularyTrackerApp.swift.o",
+    "swiftmodule": "/Users/cvv/code/Life/VocabularyTracker/.build/arm64-apple-macosx/debug/VocabularyApp.build/VocabularyTrackerApp~partial.swiftmodule",
+    "swift-dependencies": "/Users/cvv/code/Life/VocabularyTracker/.build/arm64-apple-macosx/debug/VocabularyApp.build/VocabularyTrackerApp.swiftdeps",
+    "diagnostics": "/Users/cvv/code/Life/VocabularyTracker/.build/arm64-apple-macosx/debug/VocabularyApp.build/VocabularyTrackerApp.dia"
+  },
+  "/Users/cvv/code/Life/VocabularyTracker/Sources/VocabularyApp/Features/AddWord/AddWordView.swift": {
+    "dependencies": "/Users/cvv/code/Life/VocabularyTracker/.build/arm64-apple-macosx/debug/VocabularyApp.build/AddWordView.d",
+    "object": "/Users/cvv/code/Life/VocabularyTracker/.build/arm64-apple-macosx/debug/VocabularyApp.build/AddWordView.swift.o",
+    "swiftmodule": "/Users/cvv/code/Life/VocabularyTracker/.build/arm64-apple-macosx/debug/VocabularyApp.build/AddWordView~partial.swiftmodule",
+    "swift-dependencies": "/Users/cvv/code/Life/VocabularyTracker/.build/arm64-apple-macosx/debug/VocabularyApp.build/AddWordView.swiftdeps",
+    "diagnostics": "/Users/cvv/code/Life/VocabularyTracker/.build/arm64-apple-macosx/debug/VocabularyApp.build/AddWordView.dia"
+  },
+  "/Users/cvv/code/Life/VocabularyTracker/Sources/VocabularyApp/Features/AddWord/AddWordViewModel.swift": {
+    "dependencies": "/Users/cvv/code/Life/VocabularyTracker/.build/arm64-apple-macosx/debug/VocabularyApp.build/AddWordViewModel.d",
+    "object": "/Users/cvv/code/Life/VocabularyTracker/.build/arm64-apple-macosx/debug/VocabularyApp.build/AddWordViewModel.swift.o",
+    "swiftmodule": "/Users/cvv/code/Life/VocabularyTracker/.build/arm64-apple-macosx/debug/VocabularyApp.build/AddWordViewModel~partial.swiftmodule",
+    "swift-dependencies": "/Users/cvv/code/Life/VocabularyTracker/.build/arm64-apple-macosx/debug/VocabularyApp.build/AddWordViewModel.swiftdeps",
+    "diagnostics": "/Users/cvv/code/Life/VocabularyTracker/.build/arm64-apple-macosx/debug/VocabularyApp.build/AddWordViewModel.dia"
+  },
+  "/Users/cvv/code/Life/VocabularyTracker/Sources/VocabularyApp/Features/Learn/LearnView.swift": {
+    "dependencies": "/Users/cvv/code/Life/VocabularyTracker/.build/arm64-apple-macosx/debug/VocabularyApp.build/LearnView.d",
+    "object": "/Users/cvv/code/Life/VocabularyTracker/.build/arm64-apple-macosx/debug/VocabularyApp.build/LearnView.swift.o",
+    "swiftmodule": "/Users/cvv/code/Life/VocabularyTracker/.build/arm64-apple-macosx/debug/VocabularyApp.build/LearnView~partial.swiftmodule",
+    "swift-dependencies": "/Users/cvv/code/Life/VocabularyTracker/.build/arm64-apple-macosx/debug/VocabularyApp.build/LearnView.swiftdeps",
+    "diagnostics": "/Users/cvv/code/Life/VocabularyTracker/.build/arm64-apple-macosx/debug/VocabularyApp.build/LearnView.dia"
+  },
+  "/Users/cvv/code/Life/VocabularyTracker/Sources/VocabularyApp/Features/Learn/LearnViewModel.swift": {
+    "dependencies": "/Users/cvv/code/Life/VocabularyTracker/.build/arm64-apple-macosx/debug/VocabularyApp.build/LearnViewModel.d",
+    "object": "/Users/cvv/code/Life/VocabularyTracker/.build/arm64-apple-macosx/debug/VocabularyApp.build/LearnViewModel.swift.o",
+    "swiftmodule": "/Users/cvv/code/Life/VocabularyTracker/.build/arm64-apple-macosx/debug/VocabularyApp.build/LearnViewModel~partial.swiftmodule",
+    "swift-dependencies": "/Users/cvv/code/Life/VocabularyTracker/.build/arm64-apple-macosx/debug/VocabularyApp.build/LearnViewModel.swiftdeps",
+    "diagnostics": "/Users/cvv/code/Life/VocabularyTracker/.build/arm64-apple-macosx/debug/VocabularyApp.build/LearnViewModel.dia"
+  },
+  "/Users/cvv/code/Life/VocabularyTracker/Sources/VocabularyApp/Features/Words/WordsView.swift": {
+    "dependencies": "/Users/cvv/code/Life/VocabularyTracker/.build/arm64-apple-macosx/debug/VocabularyApp.build/WordsView.d",
+    "object": "/Users/cvv/code/Life/VocabularyTracker/.build/arm64-apple-macosx/debug/VocabularyApp.build/WordsView.swift.o",
+    "swiftmodule": "/Users/cvv/code/Life/VocabularyTracker/.build/arm64-apple-macosx/debug/VocabularyApp.build/WordsView~partial.swiftmodule",
+    "swift-dependencies": "/Users/cvv/code/Life/VocabularyTracker/.build/arm64-apple-macosx/debug/VocabularyApp.build/WordsView.swiftdeps",
+    "diagnostics": "/Users/cvv/code/Life/VocabularyTracker/.build/arm64-apple-macosx/debug/VocabularyApp.build/WordsView.dia"
+  },
+  "/Users/cvv/code/Life/VocabularyTracker/Sources/VocabularyApp/Features/Words/WordsViewModel.swift": {
+    "dependencies": "/Users/cvv/code/Life/VocabularyTracker/.build/arm64-apple-macosx/debug/VocabularyApp.build/WordsViewModel.d",
+    "object": "/Users/cvv/code/Life/VocabularyTracker/.build/arm64-apple-macosx/debug/VocabularyApp.build/WordsViewModel.swift.o",
+    "swiftmodule": "/Users/cvv/code/Life/VocabularyTracker/.build/arm64-apple-macosx/debug/VocabularyApp.build/WordsViewModel~partial.swiftmodule",
+    "swift-dependencies": "/Users/cvv/code/Life/VocabularyTracker/.build/arm64-apple-macosx/debug/VocabularyApp.build/WordsViewModel.swiftdeps",
+    "diagnostics": "/Users/cvv/code/Life/VocabularyTracker/.build/arm64-apple-macosx/debug/VocabularyApp.build/WordsViewModel.dia"
+  }
+}

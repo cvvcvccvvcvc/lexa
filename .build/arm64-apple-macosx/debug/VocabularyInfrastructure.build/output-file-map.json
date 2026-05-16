@@ -1,0 +1,33 @@
+{
+  "": {
+    "swift-dependencies": "/Users/cvv/code/Life/VocabularyTracker/.build/arm64-apple-macosx/debug/VocabularyInfrastructure.build/master.swiftdeps"
+  },
+  "/Users/cvv/code/Life/VocabularyTracker/Sources/VocabularyInfrastructure/Persistence/WordRecord.swift": {
+    "dependencies": "/Users/cvv/code/Life/VocabularyTracker/.build/arm64-apple-macosx/debug/VocabularyInfrastructure.build/WordRecord.d",
+    "object": "/Users/cvv/code/Life/VocabularyTracker/.build/arm64-apple-macosx/debug/VocabularyInfrastructure.build/WordRecord.swift.o",
+    "swiftmodule": "/Users/cvv/code/Life/VocabularyTracker/.build/arm64-apple-macosx/debug/VocabularyInfrastructure.build/WordRecord~partial.swiftmodule",
+    "swift-dependencies": "/Users/cvv/code/Life/VocabularyTracker/.build/arm64-apple-macosx/debug/VocabularyInfrastructure.build/WordRecord.swiftdeps",
+    "diagnostics": "/Users/cvv/code/Life/VocabularyTracker/.build/arm64-apple-macosx/debug/VocabularyInfrastructure.build/WordRecord.dia"
+  },
+  "/Users/cvv/code/Life/VocabularyTracker/Sources/VocabularyInfrastructure/Persistence/WordRepository.swift": {
+    "dependencies": "/Users/cvv/code/Life/VocabularyTracker/.build/arm64-apple-macosx/debug/VocabularyInfrastructure.build/WordRepository.d",
+    "object": "/Users/cvv/code/Life/VocabularyTracker/.build/arm64-apple-macosx/debug/VocabularyInfrastructure.build/WordRepository.swift.o",
+    "swiftmodule": "/Users/cvv/code/Life/VocabularyTracker/.build/arm64-apple-macosx/debug/VocabularyInfrastructure.build/WordRepository~partial.swiftmodule",
+    "swift-dependencies": "/Users/cvv/code/Life/VocabularyTracker/.build/arm64-apple-macosx/debug/VocabularyInfrastructure.build/WordRepository.swiftdeps",
+    "diagnostics": "/Users/cvv/code/Life/VocabularyTracker/.build/arm64-apple-macosx/debug/VocabularyInfrastructure.build/WordRepository.dia"
+  },
+  "/Users/cvv/code/Life/VocabularyTracker/Sources/VocabularyInfrastructure/Speech/AppleSpeechService.swift": {
+    "dependencies": "/Users/cvv/code/Life/VocabularyTracker/.build/arm64-apple-macosx/debug/VocabularyInfrastructure.build/AppleSpeechService.d",
+    "object": "/Users/cvv/code/Life/VocabularyTracker/.build/arm64-apple-macosx/debug/VocabularyInfrastructure.build/AppleSpeechService.swift.o",
+    "swiftmodule": "/Users/cvv/code/Life/VocabularyTracker/.build/arm64-apple-macosx/debug/VocabularyInfrastructure.build/AppleSpeechService~partial.swiftmodule",
+    "swift-dependencies": "/Users/cvv/code/Life/VocabularyTracker/.build/arm64-apple-macosx/debug/VocabularyInfrastructure.build/AppleSpeechService.swiftdeps",
+    "diagnostics": "/Users/cvv/code/Life/VocabularyTracker/.build/arm64-apple-macosx/debug/VocabularyInfrastructure.build/AppleSpeechService.dia"
+  },
+  "/Users/cvv/code/Life/VocabularyTracker/Sources/VocabularyInfrastructure/Speech/SpeechService.swift": {
+    "dependencies": "/Users/cvv/code/Life/VocabularyTracker/.build/arm64-apple-macosx/debug/VocabularyInfrastructure.build/SpeechService.d",
+    "object": "/Users/cvv/code/Life/VocabularyTracker/.build/arm64-apple-macosx/debug/VocabularyInfrastructure.build/SpeechService.swift.o",
+    "swiftmodule": "/Users/cvv/code/Life/VocabularyTracker/.build/arm64-apple-macosx/debug/VocabularyInfrastructure.build/SpeechService~partial.swiftmodule",
+    "swift-dependencies": "/Users/cvv/code/Life/VocabularyTracker/.build/arm64-apple-macosx/debug/VocabularyInfrastructure.build/SpeechService.swiftdeps",
+    "diagnostics": "/Users/cvv/code/Life/VocabularyTracker/.build/arm64-apple-macosx/debug/VocabularyInfrastructure.build/SpeechService.dia"
+  }
+}

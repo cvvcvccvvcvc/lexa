@@ -1,0 +1,4 @@
+module VocabularyCore {
+    header "/Users/cvv/code/Life/VocabularyTracker/.build/arm64-apple-macosx/debug/VocabularyCore.build/VocabularyCore-Swift.h"
+    requires objc
+}
