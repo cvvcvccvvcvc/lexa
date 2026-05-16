@@ -37,6 +37,14 @@ Build commands for both paths are in [build-and-run.md](build-and-run.md). The f
 
 `SpeechService` (protocol) + `AppleSpeechService` (AVFoundation adapter) keep AVFoundation out of feature views. Feature code calls the protocol only.
 
+## Translation
+
+`AppleTranslationService` (in `VocabularyInfrastructure/Translation`) is a nonisolated namespace whose single static method wraps `TranslationSession.translate`. The session itself is owned by the SwiftUI view via the `.translationTask` modifier and passed in per call — there is no long-lived service object, because `TranslationSession` is fundamentally view-scoped.
+
+The Add Word feature holds a `TranslationSession.Configuration` in its view model. Tapping the translate button mutates that configuration (via `invalidate()` on existing or a fresh instance), which triggers `.translationTask` to vend a new session to the view model. The view model captures the English text at click time so later edits do not affect the in-flight translation.
+
+`Translation` is only imported from `VocabularyInfrastructure/Translation/` and the Add Word feature. No other code in the project depends on it.
+
 ## Where to put new code
 
 | Kind of change | Target |

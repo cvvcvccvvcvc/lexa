@@ -1,5 +1,6 @@
 import AppKit
 import SwiftUI
+import Translation
 import VocabularyCore
 import VocabularyInfrastructure
 
@@ -62,6 +63,9 @@ struct AddWordView: View {
             try? await Task.sleep(for: .seconds(3))
             viewModel.lastAddedEnglish = nil
         }
+        .translationTask(viewModel.translationConfiguration) { session in
+            await viewModel.runTranslation(using: session)
+        }
     }
 
     private func form(maxCommentHeight: CGFloat) -> some View {
@@ -96,6 +100,7 @@ struct AddWordView: View {
                     }
                     .onChange(of: viewModel.englishText) { _, _ in
                         viewModel.englishError = nil
+                        viewModel.dismissTranslationError()
                     }
 
                 if let englishError = viewModel.englishError {
@@ -113,7 +118,8 @@ struct AddWordView: View {
                     .font(.system(size: 14))
                     .foregroundStyle(Lexa.text)
                     .focused($focusedField, equals: .russian)
-                    .padding(.horizontal, 11)
+                    .padding(.leading, 11)
+                    .padding(.trailing, 40)
                     .frame(height: 32)
                     .background(Lexa.inputBackground, in: RoundedRectangle(cornerRadius: 6))
                     .overlay(alignment: .leading) {
@@ -121,20 +127,29 @@ struct AddWordView: View {
                             Text("например, счастливая случайность")
                                 .font(.system(size: 14))
                                 .foregroundStyle(Lexa.tertiaryText)
-                                .padding(.horizontal, 11)
+                                .padding(.leading, 11)
                                 .allowsHitTesting(false)
                         }
                     }
+                    .overlay(alignment: .trailing) {
+                        translateButton
+                            .padding(.trailing, 4)
+                    }
                     .overlay {
                         RoundedRectangle(cornerRadius: 6)
-                            .stroke(viewModel.russianError == nil ? Lexa.inputBorder : Lexa.red)
+                            .stroke(translationErrorVisible || viewModel.russianError != nil ? Lexa.red : Lexa.inputBorder)
                     }
                     .onChange(of: viewModel.russianTranslation) { _, _ in
                         viewModel.russianError = nil
+                        viewModel.dismissTranslationError()
                     }
 
                 if let russianError = viewModel.russianError {
                     Text(russianError)
+                        .font(.system(size: 12))
+                        .foregroundStyle(Lexa.red)
+                } else if case .failed(let message) = viewModel.translationState {
+                    Text(message)
                         .font(.system(size: 12))
                         .foregroundStyle(Lexa.red)
                 }
@@ -171,6 +186,36 @@ struct AddWordView: View {
                     .foregroundStyle(Lexa.red)
             }
         }
+    }
+
+    private var translateButton: some View {
+        Button {
+            viewModel.requestTranslation()
+        } label: {
+            Group {
+                if viewModel.translationState == .translating {
+                    ProgressView()
+                        .controlSize(.small)
+                } else {
+                    Image(systemName: "character.bubble")
+                        .font(.system(size: 13, weight: .medium))
+                }
+            }
+            .foregroundStyle(viewModel.canTranslate ? Lexa.secondaryText : Lexa.tertiaryText)
+            .frame(width: 30, height: 26)
+            .contentShape(RoundedRectangle(cornerRadius: 4))
+        }
+        .buttonStyle(.plain)
+        .disabled(!viewModel.canTranslate)
+        .help("Translate English → Russian")
+    }
+
+    private var translationErrorVisible: Bool {
+        if case .failed = viewModel.translationState {
+            return true
+        }
+
+        return false
     }
 
     private func commentEditor(maxHeight: CGFloat) -> some View {

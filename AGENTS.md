@@ -4,7 +4,7 @@ Short, always-loaded guide for AI agents working on this repo. Deeper material l
 
 ## What this project is
 
-Lexa is a native, local-first macOS vocabulary trainer. The user saves English words with Russian translations and reviews them through Scheduled Review first, then infinite Free Review. macOS 14+, Swift 6, SwiftUI, Swift Testing.
+Lexa is a native, local-first macOS vocabulary trainer. The user saves English words with Russian translations and reviews them through Scheduled Review first, then infinite Free Review. macOS 15+, Swift 6, SwiftUI, Swift Testing.
 
 ## Repository map
 

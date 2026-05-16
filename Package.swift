@@ -5,7 +5,7 @@ import PackageDescription
 let package = Package(
     name: "VocabularyTracker",
     platforms: [
-        .macOS(.v14)
+        .macOS(.v15)
     ],
     products: [
         .library(
@@ -36,7 +36,8 @@ let package = Package(
             exclude: [
                 "README.md",
                 "Persistence/README.md",
-                "Speech/README.md"
+                "Speech/README.md",
+                "Translation/README.md"
             ]
         ),
         .executableTarget(

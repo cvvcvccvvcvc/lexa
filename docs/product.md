@@ -34,8 +34,10 @@ Main screen. Shows one card at a time.
 Manual word entry. Fields:
 
 - English word or phrase (required).
-- Russian translation (required).
+- Russian translation (required). A trailing button inside the field translates the current English value into Russian on demand and overwrites whatever is in the field.
 - Comment (optional — synonyms, usage notes, examples, nuance).
+
+Translation runs on-device through Apple's `Translation` framework (no network, no API key). On first use the system may prompt the user to download the EN↔RU language pack. The translation never auto-fires — only on explicit button press. See [architecture.md](architecture.md#translation) for adapter details.
 
 After save: persist the word, clear the form, stay on Add Word, show a lightweight confirmation. The user never sees technical fields.
 

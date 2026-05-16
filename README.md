@@ -5,7 +5,7 @@ Native, local-first macOS vocabulary trainer. Save English words with Russian tr
 ## Stack
 
 - Swift 6 / SwiftUI / Swift Testing
-- macOS 14+
+- macOS 15+ (required by the on-device translation feature in Add Word)
 - SwiftData adapter behind `VOCABULARY_SWIFTDATA`; JSON fallback for environments without `SwiftDataMacros`
 
 ## Build and run

@@ -4,9 +4,10 @@ The project is a Swift Package targeting macOS 14+.
 
 ## Prerequisites
 
-- macOS 14 or later.
+- macOS 15 or later. The Add Word translation feature depends on the programmatic `TranslationSession` API, which is only available from macOS 15.
 - Swift 6 toolchain.
 - For the SwiftData adapter path: a full Xcode SDK that ships with `SwiftDataMacros`. Plain Command Line Tools do not include it.
+- For translation: the EN↔RU language pack must be available locally. The system will offer to download it the first time the user taps the translate button.
 
 ## Default build (JSON fallback)
 
