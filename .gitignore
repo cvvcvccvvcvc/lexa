@@ -6,3 +6,6 @@ Build/
 
 # macOS Finder metadata
 .DS_Store
+
+# Claude Code local state
+.claude/
