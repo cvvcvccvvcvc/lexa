@@ -59,6 +59,17 @@ Scheduling logic is the core risk surface, so the suite focuses there. UI is int
 - Generating a batch of 50 from 10,000 in-memory words stays within an acceptable local budget.
 - The picker has no persistence dependency — assert this structurally, not just by behavior.
 
+### Dictionary parsing & formatting
+
+These tests run on captured real `DCSCopyTextDefinition` output, not on live system calls — `Tests/VocabularyCoreTests/DictionaryFixtures.swift` holds the strings.
+
+- Pronunciation is extracted from the leading `| … |` only when it does not contain part-of-speech keywords.
+- Parser identifies multiple parts of speech in one entry, sub-senses split on ` • `, definition vs. example splits on the first `: `.
+- Section headers `DERIVATIVES`, `ORIGIN`, `PHRASES`, `USAGE`, `NOTE` separate top-level extras.
+- Unstructured input falls back to a single sense with the whole text.
+- Formatter respects each toggle independently and never produces double blank lines or leading/trailing whitespace.
+- Fallback path: an entry with no parsed senses but with raw text emits normalised whitespace, not empty output.
+
 ## Running
 
 ```bash

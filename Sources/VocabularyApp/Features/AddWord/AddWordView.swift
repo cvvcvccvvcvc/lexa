@@ -12,6 +12,9 @@ struct AddWordView: View {
     @StateObject private var viewModel = AddWordViewModel()
     @State private var commentHeight = Self.minimumCommentHeight
     @FocusState private var focusedField: Field?
+    @AppStorage("lexa.dictionary.includePronunciation") private var includePronunciation = false
+    @AppStorage("lexa.dictionary.includeExamples") private var includeExamples = true
+    @AppStorage("lexa.dictionary.includeExtras") private var includeExtras = false
 
     private static let minimumCommentHeight: CGFloat = 66
     private static let maximumCommentHeight: CGFloat = 220
@@ -101,6 +104,7 @@ struct AddWordView: View {
                     .onChange(of: viewModel.englishText) { _, _ in
                         viewModel.englishError = nil
                         viewModel.dismissTranslationError()
+                        viewModel.dismissDictionaryError()
                     }
 
                 if let englishError = viewModel.englishError {
@@ -156,9 +160,21 @@ struct AddWordView: View {
             }
 
             VStack(alignment: .leading, spacing: 6) {
-                LexaFieldLabel(title: "Comment", optional: true)
+                HStack(spacing: 6) {
+                    LexaFieldLabel(title: "Comment", optional: true)
+
+                    Spacer()
+
+                    dictionaryButton
+                }
 
                 commentEditor(maxHeight: maxCommentHeight)
+
+                if case .failed(let message) = viewModel.dictionaryState {
+                    Text(message)
+                        .font(.system(size: 12))
+                        .foregroundStyle(Lexa.red)
+                }
             }
 
             HStack(spacing: 8) {
@@ -185,6 +201,41 @@ struct AddWordView: View {
                     .font(.system(size: 13))
                     .foregroundStyle(Lexa.red)
             }
+        }
+    }
+
+    private var dictionaryButton: some View {
+        Button {
+            let options = DictionaryFormattingOptions(
+                includePronunciation: includePronunciation,
+                includeExamples: includeExamples,
+                includeExtras: includeExtras
+            )
+
+            Task {
+                await viewModel.lookupDictionary(options: options)
+            }
+        } label: {
+            Group {
+                if viewModel.dictionaryState == .lookingUp {
+                    ProgressView()
+                        .controlSize(.small)
+                } else {
+                    Image(systemName: "text.book.closed")
+                        .font(.system(size: 13, weight: .medium))
+                }
+            }
+            .foregroundStyle(viewModel.canLookupDictionary ? Lexa.secondaryText : Lexa.tertiaryText)
+            .frame(width: 26, height: 22)
+            .contentShape(RoundedRectangle(cornerRadius: 4))
+        }
+        .buttonStyle(.plain)
+        .disabled(!viewModel.canLookupDictionary)
+        .help("Insert dictionary entry into comment (right-click to choose sections)")
+        .contextMenu {
+            Toggle("Pronunciation", isOn: $includePronunciation)
+            Toggle("Examples", isOn: $includeExamples)
+            Toggle("Extras (origin, phrases, …)", isOn: $includeExtras)
         }
     }
 
@@ -280,27 +331,38 @@ private struct AutoGrowingCommentEditor: NSViewRepresentable {
         scrollView.hasVerticalScroller = false
         scrollView.autohidesScrollers = false
         scrollView.verticalScrollElasticity = .none
+        scrollView.postsFrameChangedNotifications = true
 
-        let textView = NSTextView()
+        let textView = NSTextView(frame: NSRect(x: 0, y: 0, width: 500, height: minimumHeight))
         textView.delegate = context.coordinator
-        textView.string = text
         textView.font = .systemFont(ofSize: 13)
         textView.textColor = .labelColor
         textView.drawsBackground = false
         textView.isRichText = false
         textView.importsGraphics = false
         textView.allowsUndo = true
+        textView.minSize = NSSize(width: 0, height: 0)
+        textView.maxSize = NSSize(width: CGFloat.greatestFiniteMagnitude, height: CGFloat.greatestFiniteMagnitude)
         textView.isHorizontallyResizable = false
         textView.isVerticallyResizable = true
         textView.autoresizingMask = [.width]
         textView.textContainerInset = NSSize(width: 11, height: 8)
-        textView.textContainer?.lineFragmentPadding = 0
-        textView.textContainer?.widthTracksTextView = true
-        textView.textContainer?.containerSize = NSSize(width: scrollView.contentSize.width, height: .greatestFiniteMagnitude)
+
+        if let container = textView.textContainer {
+            container.lineFragmentPadding = 0
+            container.widthTracksTextView = true
+            container.heightTracksTextView = false
+            container.containerSize = NSSize(width: 500, height: CGFloat.greatestFiniteMagnitude)
+        }
+
+        textView.textStorage?.setAttributedString(
+            NSAttributedString(string: text, attributes: Coordinator.defaultAttributes)
+        )
 
         scrollView.documentView = textView
         context.coordinator.scrollView = scrollView
         context.coordinator.textView = textView
+        context.coordinator.observeScrollViewResize(scrollView)
 
         Task { @MainActor [coordinator = context.coordinator] in
             coordinator.recalculateHeight()
@@ -318,8 +380,13 @@ private struct AutoGrowingCommentEditor: NSViewRepresentable {
             textView.font = .systemFont(ofSize: 13)
             textView.textColor = .labelColor
 
-            if textView.string != text {
-                textView.string = text
+            if textView.string != text, let storage = textView.textStorage {
+                storage.beginEditing()
+                storage.replaceCharacters(
+                    in: NSRange(location: 0, length: storage.length),
+                    with: NSAttributedString(string: text, attributes: Coordinator.defaultAttributes)
+                )
+                storage.endEditing()
             }
         }
 
@@ -334,8 +401,31 @@ private struct AutoGrowingCommentEditor: NSViewRepresentable {
         weak var scrollView: NSScrollView?
         weak var textView: NSTextView?
 
+        static let defaultAttributes: [NSAttributedString.Key: Any] = [
+            .font: NSFont.systemFont(ofSize: 13),
+            .foregroundColor: NSColor.labelColor
+        ]
+
         init(_ parent: AutoGrowingCommentEditor) {
             self.parent = parent
+        }
+
+        deinit {
+            NotificationCenter.default.removeObserver(self)
+        }
+
+        func observeScrollViewResize(_ scrollView: NSScrollView) {
+            NotificationCenter.default.removeObserver(self, name: NSView.frameDidChangeNotification, object: nil)
+            NotificationCenter.default.addObserver(
+                self,
+                selector: #selector(scrollViewFrameDidChange(_:)),
+                name: NSView.frameDidChangeNotification,
+                object: scrollView
+            )
+        }
+
+        @objc func scrollViewFrameDidChange(_ notification: Notification) {
+            recalculateHeight()
         }
 
         func textDidChange(_ notification: Notification) {
@@ -357,8 +447,23 @@ private struct AutoGrowingCommentEditor: NSViewRepresentable {
             }
 
             let contentWidth = max(scrollView.contentSize.width, 1)
-            textContainer.containerSize = NSSize(width: contentWidth, height: .greatestFiniteMagnitude)
+
+            if abs(textView.frame.width - contentWidth) > 0.5 {
+                var textFrame = textView.frame
+                textFrame.size.width = contentWidth
+                textView.frame = textFrame
+            }
+
             textContainer.widthTracksTextView = true
+            textContainer.containerSize = NSSize(
+                width: max(contentWidth - textView.textContainerInset.width * 2, 1),
+                height: CGFloat.greatestFiniteMagnitude
+            )
+
+            layoutManager.invalidateLayout(
+                forCharacterRange: NSRange(location: 0, length: (textView.string as NSString).length),
+                actualCharacterRange: nil
+            )
             layoutManager.ensureLayout(for: textContainer)
 
             let usedRect = layoutManager.usedRect(for: textContainer)
@@ -370,7 +475,6 @@ private struct AutoGrowingCommentEditor: NSViewRepresentable {
             scrollView.verticalScrollElasticity = shouldScroll ? .automatic : .none
 
             var textFrame = textView.frame
-            textFrame.size.width = contentWidth
             textFrame.size.height = max(contentHeight, nextHeight)
             textView.frame = textFrame
 

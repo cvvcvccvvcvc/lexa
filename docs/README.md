@@ -25,6 +25,8 @@ Module-specific invariants live next to the code, not here:
 - [`Sources/VocabularyCore/Domain/Scheduling/README.md`](../Sources/VocabularyCore/Domain/Scheduling/README.md)
 - [`Sources/VocabularyInfrastructure/README.md`](../Sources/VocabularyInfrastructure/README.md)
 - [`Sources/VocabularyInfrastructure/Persistence/README.md`](../Sources/VocabularyInfrastructure/Persistence/README.md)
+- [`Sources/VocabularyCore/Domain/Dictionary/README.md`](../Sources/VocabularyCore/Domain/Dictionary/README.md)
+- [`Sources/VocabularyInfrastructure/Dictionary/README.md`](../Sources/VocabularyInfrastructure/Dictionary/README.md)
 - [`Sources/VocabularyInfrastructure/Speech/README.md`](../Sources/VocabularyInfrastructure/Speech/README.md)
 - [`Sources/VocabularyInfrastructure/Translation/README.md`](../Sources/VocabularyInfrastructure/Translation/README.md)
 - [`Sources/VocabularyApp/App/README.md`](../Sources/VocabularyApp/App/README.md)

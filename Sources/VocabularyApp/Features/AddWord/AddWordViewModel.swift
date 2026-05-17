@@ -10,6 +10,12 @@ enum AddWordTranslationState: Equatable {
     case failed(String)
 }
 
+enum AddWordDictionaryState: Equatable {
+    case idle
+    case lookingUp
+    case failed(String)
+}
+
 @MainActor
 final class AddWordViewModel: ObservableObject {
     @Published var englishText = ""
@@ -22,6 +28,7 @@ final class AddWordViewModel: ObservableObject {
     @Published var lastAddedEnglish: String?
     @Published var translationConfiguration: TranslationSession.Configuration?
     @Published var translationState: AddWordTranslationState = .idle
+    @Published var dictionaryState: AddWordDictionaryState = .idle
 
     private var pendingTranslationText: String?
 
@@ -33,6 +40,11 @@ final class AddWordViewModel: ObservableObject {
     var canTranslate: Bool {
         !englishText.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty &&
             translationState != .translating
+    }
+
+    var canLookupDictionary: Bool {
+        !englishText.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty &&
+            dictionaryState != .lookingUp
     }
 
     func addWord(repository: WordRepository) {
@@ -78,6 +90,7 @@ final class AddWordViewModel: ObservableObject {
             lastAddedEnglish = english
             errorMessage = nil
             translationState = .idle
+            dictionaryState = .idle
         } catch {
             errorMessage = error.localizedDescription
             confirmationMessage = nil
@@ -95,6 +108,7 @@ final class AddWordViewModel: ObservableObject {
         confirmationMessage = nil
         lastAddedEnglish = nil
         translationState = .idle
+        dictionaryState = .idle
     }
 
     func requestTranslation() {
@@ -140,6 +154,44 @@ final class AddWordViewModel: ObservableObject {
     func dismissTranslationError() {
         if case .failed = translationState {
             translationState = .idle
+        }
+    }
+
+    func lookupDictionary(options: DictionaryFormattingOptions) async {
+        let trimmed = englishText.trimmingCharacters(in: .whitespacesAndNewlines)
+
+        guard !trimmed.isEmpty, dictionaryState != .lookingUp else {
+            return
+        }
+
+        dictionaryState = .lookingUp
+
+        let raw: String
+
+        do {
+            raw = try await Task.detached(priority: .userInitiated) {
+                try AppleDictionaryService.lookup(trimmed)
+            }.value
+        } catch {
+            dictionaryState = .failed(error.localizedDescription)
+            return
+        }
+
+        let entry = DictionaryEntryParser.parse(raw)
+        let formatted = DictionaryEntryFormatter.format(entry, options: options)
+
+        guard !formatted.isEmpty else {
+            dictionaryState = .failed(DictionaryLookupError.notFound.localizedDescription)
+            return
+        }
+
+        comment = formatted
+        dictionaryState = .idle
+    }
+
+    func dismissDictionaryError() {
+        if case .failed = dictionaryState {
+            dictionaryState = .idle
         }
     }
 }

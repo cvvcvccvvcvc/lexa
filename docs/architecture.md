@@ -45,6 +45,14 @@ The Add Word feature holds a `TranslationSession.Configuration` in its view mode
 
 `Translation` is only imported from `VocabularyInfrastructure/Translation/` and the Add Word feature. No other code in the project depends on it.
 
+## Dictionary
+
+`AppleDictionaryService.lookup(_:)` (in `VocabularyInfrastructure/Dictionary`) is a thin synchronous wrapper around `DCSCopyTextDefinition` from CoreServices. It does not parse — it returns the raw plain text the system returns or throws `DictionaryLookupError.notFound`.
+
+Parsing and formatting live in `VocabularyCore/Domain/Dictionary` as pure code: `DictionaryEntry` (model), `DictionaryEntryParser` (raw text → structured entry), `DictionaryEntryFormatter` (entry + `DictionaryFormattingOptions` → comment-ready string). DCS output has no `\n`; the parser infers structure from inline markers (`| ipa |`, part-of-speech words, ` • `, `:`, CAPS section headers). When the format is unrecognised, the formatter falls back to normalised raw text rather than producing nothing.
+
+The Add Word view holds the toggle state via `@AppStorage` (keys under `lexa.dictionary.*`) so per-user preferences persist without a Settings screen. The lookup itself runs on a detached task because DCS calls can briefly block on first use.
+
 ## Where to put new code
 
 | Kind of change | Target |

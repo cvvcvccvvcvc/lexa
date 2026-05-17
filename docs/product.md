@@ -35,9 +35,11 @@ Manual word entry. Fields:
 
 - English word or phrase (required).
 - Russian translation (required). A trailing button inside the field translates the current English value into Russian on demand and overwrites whatever is in the field.
-- Comment (optional — synonyms, usage notes, examples, nuance).
+- Comment (optional — synonyms, usage notes, examples, nuance). A book-icon button next to the field label inserts a formatted dictionary entry from the user's enabled macOS dictionaries; right-click on the button toggles which sections are included (pronunciation, examples, extras). Inserting overwrites the comment field.
 
 Translation runs on-device through Apple's `Translation` framework (no network, no API key). On first use the system may prompt the user to download the EN↔RU language pack. The translation never auto-fires — only on explicit button press. See [architecture.md](architecture.md#translation) for adapter details.
+
+Dictionary lookup runs on-device through `DCSCopyTextDefinition` (CoreServices). It returns whatever the user's enabled dictionaries provide; quality and language depend on that selection. See [architecture.md](architecture.md#dictionary) for adapter details.
 
 After save: persist the word, clear the form, stay on Add Word, show a lightweight confirmation. The user never sees technical fields.
 

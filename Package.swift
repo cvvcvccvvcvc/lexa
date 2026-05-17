@@ -26,6 +26,7 @@ let package = Package(
             name: "VocabularyCore",
             exclude: [
                 "Domain/README.md",
+                "Domain/Dictionary/README.md",
                 "Domain/Models/README.md",
                 "Domain/Scheduling/README.md"
             ]
@@ -35,6 +36,7 @@ let package = Package(
             dependencies: ["VocabularyCore"],
             exclude: [
                 "README.md",
+                "Dictionary/README.md",
                 "Persistence/README.md",
                 "Speech/README.md",
                 "Translation/README.md"
