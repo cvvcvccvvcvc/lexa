@@ -2,8 +2,6 @@ import SwiftUI
 
 struct LexaSidebar: View {
     @Binding var selection: SidebarSection
-    var dueCount: Int
-    var wordsCount: Int
 
     var body: some View {
         VStack(spacing: 0) {
@@ -11,13 +9,9 @@ struct LexaSidebar: View {
                 .frame(height: Lexa.toolbarHeight)
 
             VStack(spacing: 1) {
-                sidebarButton(
-                    section: .learn,
-                    icon: "rectangle.stack",
-                    count: dueCount > 0 ? dueCount : nil
-                )
-                sidebarButton(section: .addWord, icon: "plus", count: nil)
-                sidebarButton(section: .words, icon: "list.bullet", count: wordsCount)
+                sidebarButton(section: .learn, icon: "rectangle.stack")
+                sidebarButton(section: .addWord, icon: "plus")
+                sidebarButton(section: .words, icon: "list.bullet")
             }
             .padding(.top, 14)
 
@@ -32,11 +26,7 @@ struct LexaSidebar: View {
         }
     }
 
-    private func sidebarButton(
-        section: SidebarSection,
-        icon: String,
-        count: Int?
-    ) -> some View {
+    private func sidebarButton(section: SidebarSection, icon: String) -> some View {
         Button {
             selection = section
         } label: {
@@ -51,13 +41,6 @@ struct LexaSidebar: View {
                     .foregroundStyle(selection == section ? .white : Lexa.text)
 
                 Spacer()
-
-                if let count {
-                    Text("\(count)")
-                        .font(.system(size: 11))
-                        .foregroundStyle(selection == section ? .white.opacity(0.85) : Lexa.secondaryText)
-                        .monospacedDigit()
-                }
             }
             .padding(.horizontal, 9)
             .frame(maxWidth: .infinity, alignment: .leading)

@@ -44,9 +44,8 @@ struct AppRootView: View {
     #endif
 
     @State private var selection: SidebarSection = .learn
-    @State private var wordsCount = 0
-    @State private var dueCount = 0
     @AppStorage(Lexa.darkModeDefaultsKey) private var isDarkMode = false
+    @AppStorage("lexa.sidebar.isVisible") private var isSidebarVisible = true
 
     private var repository: WordRepository {
         #if VOCABULARY_SWIFTDATA
@@ -58,29 +57,29 @@ struct AppRootView: View {
 
     var body: some View {
         HStack(spacing: 0) {
-            LexaSidebar(selection: $selection, dueCount: dueCount, wordsCount: wordsCount)
+            LexaSidebar(selection: $selection)
+                .padding(.leading, isSidebarVisible ? 0 : -Lexa.sidebarWidth)
 
             VStack(spacing: 0) {
                 LexaToolbar(
                     title: selection.title,
+                    left: AnyView(sidebarToggleButton),
                     right: AnyView(themeToggleButton)
                 )
 
                 Group {
                     switch selection {
                     case .learn:
-                        LearnView(repository: repository, onWordsChanged: refreshCounts)
+                        LearnView(repository: repository)
                     case .addWord:
                         AddWordView(
                             repository: repository,
-                            onWordsChanged: refreshCounts,
                             jumpToWords: {
                                 selection = .words
-                                refreshCounts()
                             }
                         )
                     case .words:
-                        WordsView(repository: repository, onWordsChanged: refreshCounts)
+                        WordsView(repository: repository)
                     }
                 }
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
@@ -88,15 +87,13 @@ struct AppRootView: View {
             }
             .frame(maxWidth: .infinity, maxHeight: .infinity)
         }
+        .clipped()
         .background(Lexa.windowBackground)
         .frame(minWidth: 980, minHeight: 640)
         .ignoresSafeArea(.container, edges: .top)
+        .animation(.easeInOut(duration: 0.22), value: isSidebarVisible)
         .onAppear {
             Lexa.applyAppearance(isDarkMode: isDarkMode)
-            refreshCounts()
-        }
-        .onChange(of: selection) { _, _ in
-            refreshCounts()
         }
         .onChange(of: isDarkMode) { _, newValue in
             Lexa.applyAppearance(isDarkMode: newValue)
@@ -110,6 +107,15 @@ struct AppRootView: View {
             systemImage: isDarkMode ? "sun.max" : "moon"
         ) {
             isDarkMode.toggle()
+        }
+    }
+
+    private var sidebarToggleButton: some View {
+        LexaIconButton(
+            title: isSidebarVisible ? "Hide sidebar" : "Show sidebar",
+            systemImage: "sidebar.leading"
+        ) {
+            isSidebarVisible.toggle()
         }
     }
 
@@ -128,6 +134,13 @@ struct AppRootView: View {
             .keyboardShortcut(.upArrow, modifiers: [.command])
             .opacity(0)
             .accessibilityHidden(true)
+
+            Button("Toggle Sidebar") {
+                isSidebarVisible.toggle()
+            }
+            .keyboardShortcut("b", modifiers: [.command])
+            .opacity(0)
+            .accessibilityHidden(true)
         }
         .frame(width: 0, height: 0)
     }
@@ -142,16 +155,5 @@ struct AppRootView: View {
 
         let nextIndex = min(sections.count - 1, max(0, index + delta))
         selection = sections[nextIndex]
-    }
-
-    private func refreshCounts() {
-        do {
-            let words = try repository.fetchWords()
-            wordsCount = words.count
-            dueCount = ScheduledReviewScheduler.eligibleWords(from: words, now: Date()).count
-        } catch {
-            wordsCount = 0
-            dueCount = 0
-        }
     }
 }
