@@ -61,11 +61,7 @@ struct AppRootView: View {
                 .padding(.leading, isSidebarVisible ? 0 : -Lexa.sidebarWidth)
 
             VStack(spacing: 0) {
-                LexaToolbar(
-                    title: selection.title,
-                    left: AnyView(sidebarToggleButton),
-                    right: AnyView(themeToggleButton)
-                )
+                Color.clear.frame(height: Lexa.toolbarHeight)
 
                 Group {
                     switch selection {
@@ -83,15 +79,38 @@ struct AppRootView: View {
                     }
                 }
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
-                .background(Lexa.windowBackground)
             }
-            .frame(maxWidth: .infinity, maxHeight: .infinity)
+            .background(Lexa.windowBackground)
         }
         .clipped()
         .background(Lexa.windowBackground)
         .frame(minWidth: 980, minHeight: 640)
         .ignoresSafeArea(.container, edges: .top)
         .animation(.easeInOut(duration: 0.22), value: isSidebarVisible)
+        .toolbar {
+            ToolbarItem(placement: .navigation) {
+                Button {
+                    isSidebarVisible.toggle()
+                } label: {
+                    Image(systemName: "sidebar.leading")
+                }
+                .help(isSidebarVisible ? "Hide sidebar" : "Show sidebar")
+            }
+
+            ToolbarItem(placement: .principal) {
+                Spacer()
+            }
+
+            ToolbarItem(placement: .primaryAction) {
+                Button {
+                    isDarkMode.toggle()
+                } label: {
+                    Image(systemName: isDarkMode ? "sun.max" : "moon")
+                }
+                .help(isDarkMode ? "Switch to light theme" : "Switch to dark theme")
+            }
+        }
+        .toolbarBackground(.hidden, for: .windowToolbar)
         .onAppear {
             Lexa.applyAppearance(isDarkMode: isDarkMode)
         }
@@ -99,24 +118,6 @@ struct AppRootView: View {
             Lexa.applyAppearance(isDarkMode: newValue)
         }
         .background(shortcutButtons)
-    }
-
-    private var themeToggleButton: some View {
-        LexaIconButton(
-            title: isDarkMode ? "Switch to light theme" : "Switch to dark theme",
-            systemImage: isDarkMode ? "sun.max" : "moon"
-        ) {
-            isDarkMode.toggle()
-        }
-    }
-
-    private var sidebarToggleButton: some View {
-        LexaIconButton(
-            title: isSidebarVisible ? "Hide sidebar" : "Show sidebar",
-            systemImage: "sidebar.leading"
-        ) {
-            isSidebarVisible.toggle()
-        }
     }
 
     private var shortcutButtons: some View {

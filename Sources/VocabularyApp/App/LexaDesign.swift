@@ -4,7 +4,7 @@ import SwiftUI
 enum Lexa {
     static let darkModeDefaultsKey = "lexa.darkMode"
     static let sidebarWidth: CGFloat = 184
-    static let toolbarHeight: CGFloat = 44
+    static let toolbarHeight: CGFloat = 52
     static let detailToolbarHeight: CGFloat = 40
 
     static var accent: Color {
@@ -120,37 +120,6 @@ private extension NSColor {
         let green = CGFloat((rgb >> 8) & 0xff) / 255
         let blue = CGFloat(rgb & 0xff) / 255
         self.init(red: red, green: green, blue: blue, alpha: alpha)
-    }
-}
-
-struct LexaToolbar: View {
-    var title: String
-    var left: AnyView = AnyView(EmptyView())
-    var right: AnyView = AnyView(EmptyView())
-
-    var body: some View {
-        ZStack {
-            Text(title)
-                .font(.system(size: 13, weight: .semibold))
-                .foregroundStyle(Lexa.text)
-                .frame(maxWidth: .infinity)
-
-            HStack(spacing: 8) {
-                left
-
-                Spacer()
-
-                right
-            }
-        }
-        .padding(.horizontal, 14)
-        .frame(height: Lexa.toolbarHeight)
-        .background(Lexa.toolbarBackground)
-        .overlay(alignment: .bottom) {
-            Rectangle()
-                .fill(Lexa.separator)
-                .frame(height: 0.5)
-        }
     }
 }
 

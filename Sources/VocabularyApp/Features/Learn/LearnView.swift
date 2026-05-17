@@ -30,7 +30,7 @@ struct LearnView: View {
 
             if viewModel.currentCard != nil {
                 modeBadge
-                    .padding(.top, 22)
+                    .padding(.top, 8)
                     .allowsHitTesting(false)
             }
 
@@ -38,7 +38,7 @@ struct LearnView: View {
                 Text(errorMessage)
                     .font(.system(size: 13))
                     .foregroundStyle(Lexa.red)
-                    .padding(.top, 56)
+                    .padding(.top, 40)
             }
         }
         .task {
@@ -107,7 +107,7 @@ struct LearnView: View {
     }
 
     private func cardCenterY(cardHeight: CGFloat, availableHeight: CGFloat) -> CGFloat {
-        let badgeBottom: CGFloat = 46
+        let badgeBottom: CGFloat = 32
         let cardTopGap: CGFloat = 28
         let bottomGap: CGFloat = viewModel.isAnswerVisible ? 104 : 72
         let minCenter = badgeBottom + cardTopGap + cardHeight / 2

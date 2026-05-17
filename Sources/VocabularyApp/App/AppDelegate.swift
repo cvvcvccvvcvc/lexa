@@ -32,9 +32,9 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
     private func configureWindows() {
         for window in NSApp.windows {
             window.title = ""
-            window.toolbar = nil
             window.titleVisibility = .hidden
             window.titlebarAppearsTransparent = true
+            window.titlebarSeparatorStyle = .none
             window.styleMask.insert(.fullSizeContentView)
             window.isMovableByWindowBackground = true
             window.minSize = NSSize(width: 980, height: 640)

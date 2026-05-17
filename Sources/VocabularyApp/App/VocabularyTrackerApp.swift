@@ -15,13 +15,13 @@ struct VocabularyTrackerApp: App {
         WindowGroup {
             AppRootView()
         }
-        .windowStyle(.hiddenTitleBar)
+        .windowToolbarStyle(UnifiedWindowToolbarStyle(showsTitle: false))
         .modelContainer(for: WordRecord.self)
         #else
         WindowGroup {
             AppRootView()
         }
-        .windowStyle(.hiddenTitleBar)
+        .windowToolbarStyle(UnifiedWindowToolbarStyle(showsTitle: false))
         #endif
     }
 }
