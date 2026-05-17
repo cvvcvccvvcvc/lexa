@@ -154,6 +154,50 @@ struct LexaToolbar: View {
     }
 }
 
+struct LexaHoverStyle: ButtonStyle {
+    enum Shape: Equatable {
+        case rounded(CGFloat)
+        case circle
+    }
+
+    var shape: Shape = .rounded(6)
+
+    func makeBody(configuration: Configuration) -> some View {
+        StyleBody(configuration: configuration, shape: shape)
+    }
+
+    private struct StyleBody: View {
+        let configuration: Configuration
+        let shape: Shape
+
+        @Environment(\.isEnabled) private var isEnabled
+        @State private var isHovering = false
+
+        var body: some View {
+            configuration.label
+                .overlay {
+                    if isEnabled, isHovering || configuration.isPressed {
+                        anyShape
+                            .fill(configuration.isPressed ? Lexa.selection : Lexa.hover)
+                            .allowsHitTesting(false)
+                    }
+                }
+                .onHover { isHovering = $0 }
+                .animation(.easeInOut(duration: 0.12), value: isHovering)
+                .animation(.easeInOut(duration: 0.08), value: configuration.isPressed)
+        }
+
+        private var anyShape: AnyShape {
+            switch shape {
+            case .rounded(let radius):
+                AnyShape(RoundedRectangle(cornerRadius: radius))
+            case .circle:
+                AnyShape(Circle())
+            }
+        }
+    }
+}
+
 struct LexaIconButton: View {
     var title: String
     var systemImage: String
@@ -165,10 +209,9 @@ struct LexaIconButton: View {
                 .font(.system(size: 12, weight: .medium))
                 .foregroundStyle(Lexa.secondaryText)
                 .frame(width: 26, height: 26)
-                .background(Color.clear, in: RoundedRectangle(cornerRadius: 6))
                 .contentShape(RoundedRectangle(cornerRadius: 6))
         }
-        .buttonStyle(.plain)
+        .buttonStyle(LexaHoverStyle())
         .help(title)
     }
 }
@@ -197,7 +240,7 @@ struct LexaToolbarButton: View {
             .background(isPrimary ? Lexa.accent : Color.clear, in: RoundedRectangle(cornerRadius: 6))
             .contentShape(RoundedRectangle(cornerRadius: 6))
         }
-        .buttonStyle(.plain)
+        .buttonStyle(LexaHoverStyle())
         .disabled(isDisabled)
         .opacity(isDisabled ? 0.6 : 1)
     }
@@ -246,7 +289,7 @@ struct LexaPrimaryButton: View {
                 .frame(height: 32)
                 .background(Lexa.accent, in: RoundedRectangle(cornerRadius: 6))
         }
-        .buttonStyle(.plain)
+        .buttonStyle(LexaHoverStyle())
         .disabled(isDisabled)
         .opacity(isDisabled ? 0.4 : 1)
     }
@@ -270,7 +313,7 @@ struct LexaSecondaryButton: View {
                         .stroke(Lexa.separator)
                 }
         }
-        .buttonStyle(.plain)
+        .buttonStyle(LexaHoverStyle())
         .disabled(isDisabled)
     }
 }
@@ -298,10 +341,15 @@ struct LexaToast: View {
             .foregroundStyle(Lexa.text)
 
             if let actionTitle, let action {
-                Button(actionTitle, action: action)
-                    .buttonStyle(.plain)
-                    .font(.system(size: 12, weight: .semibold))
-                    .foregroundStyle(Lexa.accent)
+                Button(action: action) {
+                    Text(actionTitle)
+                        .font(.system(size: 12, weight: .semibold))
+                        .foregroundStyle(Lexa.accent)
+                        .padding(.horizontal, 6)
+                        .padding(.vertical, 3)
+                        .contentShape(RoundedRectangle(cornerRadius: 4))
+                }
+                .buttonStyle(LexaHoverStyle(shape: .rounded(4)))
             }
         }
         .padding(.vertical, 10)

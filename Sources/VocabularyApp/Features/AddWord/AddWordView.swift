@@ -229,7 +229,7 @@ struct AddWordView: View {
             .frame(width: 26, height: 22)
             .contentShape(RoundedRectangle(cornerRadius: 4))
         }
-        .buttonStyle(.plain)
+        .buttonStyle(LexaHoverStyle(shape: .rounded(4)))
         .disabled(!viewModel.canLookupDictionary)
         .help("Insert dictionary entry into comment (right-click to choose sections)")
         .contextMenu {
@@ -256,7 +256,7 @@ struct AddWordView: View {
             .frame(width: 30, height: 26)
             .contentShape(RoundedRectangle(cornerRadius: 4))
         }
-        .buttonStyle(.plain)
+        .buttonStyle(LexaHoverStyle(shape: .rounded(4)))
         .disabled(!viewModel.canTranslate)
         .help("Translate English → Russian")
     }

@@ -162,7 +162,7 @@ struct LearnView: View {
             .frame(height: height)
             .animation(.easeInOut(duration: 0.20), value: viewModel.isAnswerVisible)
         }
-        .buttonStyle(.plain)
+        .buttonStyle(LexaHoverStyle(shape: .rounded(14)))
         .keyboardShortcut(.space, modifiers: [])
     }
 
@@ -274,7 +274,7 @@ struct LearnView: View {
                         .stroke(Lexa.separator)
                 }
         }
-        .buttonStyle(.plain)
+        .buttonStyle(LexaHoverStyle(shape: .circle))
     }
 
     private func judgmentButton(
@@ -303,7 +303,7 @@ struct LearnView: View {
                     .stroke(color, lineWidth: 1.5)
             }
         }
-        .buttonStyle(.plain)
+        .buttonStyle(LexaHoverStyle(shape: .rounded(8)))
     }
 
     private var emptyState: some View {

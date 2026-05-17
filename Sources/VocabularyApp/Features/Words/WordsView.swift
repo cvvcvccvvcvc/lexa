@@ -162,8 +162,10 @@ struct WordsView: View {
                         Image(systemName: "xmark.circle.fill")
                             .font(.system(size: 12))
                             .foregroundStyle(Lexa.tertiaryText)
+                            .frame(width: 18, height: 18)
+                            .contentShape(Circle())
                     }
-                    .buttonStyle(.plain)
+                    .buttonStyle(LexaHoverStyle(shape: .circle))
                 }
             }
             .padding(.horizontal, 9)
@@ -253,7 +255,7 @@ struct WordsView: View {
             .background(viewModel.selectedID == word.id ? Lexa.selection : Color.clear)
             .contentShape(Rectangle())
         }
-        .buttonStyle(.plain)
+        .buttonStyle(LexaHoverStyle(shape: .rounded(0)))
         .overlay(alignment: .bottom) {
             Rectangle()
                 .fill(Lexa.separator)
@@ -372,7 +374,7 @@ struct WordsView: View {
                                 .stroke(Lexa.separator)
                         }
                 }
-                .buttonStyle(.plain)
+                .buttonStyle(LexaHoverStyle(shape: .circle))
             }
             .padding(.bottom, 24)
 

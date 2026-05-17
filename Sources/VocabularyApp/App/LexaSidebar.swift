@@ -51,7 +51,7 @@ struct LexaSidebar: View {
             )
             .contentShape(RoundedRectangle(cornerRadius: 6))
         }
-        .buttonStyle(.plain)
+        .buttonStyle(LexaHoverStyle())
         .padding(.horizontal, 8)
     }
 }
