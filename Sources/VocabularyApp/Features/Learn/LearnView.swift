@@ -1,3 +1,5 @@
+import AppKit
+import Carbon.HIToolbox
 import SwiftUI
 import VocabularyCore
 import VocabularyInfrastructure
@@ -7,6 +9,7 @@ struct LearnView: View {
     var onWordsChanged: () -> Void = {}
 
     @StateObject private var viewModel: LearnViewModel
+    @State private var speakKeyMonitor: Any?
 
     init(
         repository: WordRepository,
@@ -43,6 +46,39 @@ struct LearnView: View {
         }
         .task {
             viewModel.load(repository: repository)
+        }
+        .onAppear { installSpeakMonitor() }
+        .onDisappear { removeSpeakMonitor() }
+    }
+
+    private func installSpeakMonitor() {
+        guard speakKeyMonitor == nil else {
+            return
+        }
+
+        speakKeyMonitor = NSEvent.addLocalMonitorForEvents(matching: .keyDown) { event in
+            guard event.keyCode == UInt16(kVK_ANSI_S),
+                  event.modifierFlags.intersection(.deviceIndependentFlagsMask).isEmpty else {
+                return event
+            }
+
+            if NSApp.keyWindow?.firstResponder is NSText {
+                return event
+            }
+
+            guard viewModel.canSpeakCurrentEnglish else {
+                return event
+            }
+
+            viewModel.speakCurrentEnglish()
+            return nil
+        }
+    }
+
+    private func removeSpeakMonitor() {
+        if let monitor = speakKeyMonitor {
+            NSEvent.removeMonitor(monitor)
+            speakKeyMonitor = nil
         }
     }
 
