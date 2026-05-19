@@ -273,6 +273,7 @@ struct LearnView: View {
                     Circle()
                         .stroke(Lexa.separator)
                 }
+                .contentShape(Circle())
         }
         .buttonStyle(LexaHoverStyle(shape: .circle))
     }
@@ -302,6 +303,7 @@ struct LearnView: View {
                 RoundedRectangle(cornerRadius: 8)
                     .stroke(color, lineWidth: 1.5)
             }
+            .contentShape(RoundedRectangle(cornerRadius: 8))
         }
         .buttonStyle(LexaHoverStyle(shape: .rounded(8)))
     }
