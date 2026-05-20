@@ -55,6 +55,7 @@ final class LearnViewModel: ObservableObject {
     @Published var phase: LearnPhase = .scheduled
     @Published var errorMessage: String?
     @Published var scheduledDueCount = 0
+    @Published var hasLoaded = false
 
     private var freeReviewPicker = FreeReviewPicker(rng: SystemReviewRandomGenerator())
     private var directionRNG = SystemReviewRandomGenerator()
@@ -87,6 +88,7 @@ final class LearnViewModel: ObservableObject {
         } catch {
             errorMessage = error.localizedDescription
         }
+        hasLoaded = true
     }
 
     func revealAnswer() {

@@ -13,6 +13,7 @@ final class WordsViewModel: ObservableObject {
     @Published var errorMessage: String?
     @Published var confirmationMessage: String?
     @Published var isDeleteConfirmationPresented = false
+    @Published var hasLoaded = false
 
     private let speechService: any SpeechService
 
@@ -49,6 +50,7 @@ final class WordsViewModel: ObservableObject {
         } catch {
             errorMessage = error.localizedDescription
         }
+        hasLoaded = true
     }
 
     func select(id: UUID?) {

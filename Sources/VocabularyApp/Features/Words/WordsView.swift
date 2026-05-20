@@ -68,15 +68,17 @@ struct WordsView: View {
 
     var body: some View {
         ZStack {
-            if viewModel.words.isEmpty {
-                emptyState
-            } else {
-                HStack(spacing: 0) {
-                    listPane
+            if viewModel.hasLoaded {
+                if viewModel.words.isEmpty {
+                    emptyState
+                } else {
+                    HStack(spacing: 0) {
+                        listPane
 
-                    if viewModel.selectedWord != nil {
-                        detailPane
-                            .frame(maxWidth: .infinity, maxHeight: .infinity)
+                        if viewModel.selectedWord != nil {
+                            detailPane
+                                .frame(maxWidth: .infinity, maxHeight: .infinity)
+                        }
                     }
                 }
             }

@@ -25,13 +25,15 @@ struct LearnView: View {
             Lexa.windowBackground
                 .ignoresSafeArea()
 
-            if let card = viewModel.currentCard {
-                cardContent(card)
-            } else {
-                emptyState
+            if viewModel.hasLoaded {
+                if let card = viewModel.currentCard {
+                    cardContent(card)
+                } else {
+                    emptyState
+                }
             }
 
-            if viewModel.currentCard != nil {
+            if viewModel.hasLoaded, viewModel.currentCard != nil {
                 modeBadge
                     .padding(.top, 8)
                     .allowsHitTesting(false)
