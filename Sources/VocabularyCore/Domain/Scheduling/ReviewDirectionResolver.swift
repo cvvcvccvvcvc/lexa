@@ -36,8 +36,10 @@ public enum ReviewProgressRecorder {
         switch answer {
         case .correct:
             updated.correctCount += 1
+            updated.lastAnswerWasWrong = false
         case .wrong:
             updated.wrongCount += 1
+            updated.lastAnswerWasWrong = true
         }
 
         updated.lastReviewedAt = now

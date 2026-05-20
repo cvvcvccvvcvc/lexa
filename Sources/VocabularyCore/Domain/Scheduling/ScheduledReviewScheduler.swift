@@ -49,9 +49,11 @@ public enum ScheduledReviewScheduler {
         case .correct:
             updated.level = min(VocabularyWord.maximumLevel, currentLevel + 1)
             updated.correctCount += 1
+            updated.lastAnswerWasWrong = false
         case .wrong:
             updated.level = max(VocabularyWord.minimumLevel, currentLevel - 1)
             updated.wrongCount += 1
+            updated.lastAnswerWasWrong = true
         }
 
         updated.nextReviewAt = nextReviewDate(forLevel: updated.level, now: now)

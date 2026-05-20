@@ -66,4 +66,4 @@ Learn always serves Scheduled Review first. Free Review only starts when no new 
 
 ## Persisted fields
 
-At minimum: `id`, `englishText`, `russianTranslation`, `comment`, `level`, `createdAt`, `updatedAt`, `nextReviewAt`, `lastSeenAt`, `lastReviewedAt`, `lastDirection`, `correctCount`, `wrongCount`.
+At minimum: `id`, `englishText`, `russianTranslation`, `comment`, `level`, `createdAt`, `updatedAt`, `nextReviewAt`, `lastSeenAt`, `lastReviewedAt`, `lastDirection`, `correctCount`, `wrongCount`, `lastAnswerWasWrong`.

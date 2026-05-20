@@ -18,6 +18,7 @@ public final class WordRecord {
     public var lastDirectionRaw: String?
     public var correctCount: Int
     public var wrongCount: Int
+    public var lastAnswerWasWrong: Bool = false
 
     public init(word: VocabularyWord) {
         id = word.id
@@ -33,6 +34,7 @@ public final class WordRecord {
         lastDirectionRaw = word.lastDirection?.rawValue
         correctCount = word.correctCount
         wrongCount = word.wrongCount
+        lastAnswerWasWrong = word.lastAnswerWasWrong
     }
 
     public var domainWord: VocabularyWord {
@@ -49,7 +51,8 @@ public final class WordRecord {
             lastReviewedAt: lastReviewedAt,
             lastDirection: lastDirectionRaw.flatMap(ReviewDirection.init(rawValue:)),
             correctCount: correctCount,
-            wrongCount: wrongCount
+            wrongCount: wrongCount,
+            lastAnswerWasWrong: lastAnswerWasWrong
         )
     }
 
@@ -66,6 +69,7 @@ public final class WordRecord {
         lastDirectionRaw = word.lastDirection?.rawValue
         correctCount = word.correctCount
         wrongCount = word.wrongCount
+        lastAnswerWasWrong = word.lastAnswerWasWrong
     }
 }
 #endif

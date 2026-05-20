@@ -16,6 +16,7 @@ Scheduling logic is the core risk surface, so the suite focuses there. UI is int
 - Correct answer: `level` clamps at `9`; `nextReviewAt` matches the interval table.
 - Wrong answer: `level` clamps at `0`; a drop to `0` makes the word immediately due.
 - `correctCount` / `wrongCount` increment on the right event.
+- `lastAnswerWasWrong` toggles to `true` on wrong, `false` on correct.
 - `lastReviewedAt` is set on every answer.
 
 ### Free Review side effects
@@ -24,8 +25,8 @@ Scheduling logic is the core risk surface, so the suite focuses there. UI is int
 - Correct does not change `nextReviewAt`.
 - Wrong does not change `level`.
 - Wrong does not change `nextReviewAt`.
-- Correct increments `correctCount`.
-- Wrong increments `wrongCount`.
+- Correct increments `correctCount` and sets `lastAnswerWasWrong` to `false`.
+- Wrong increments `wrongCount` and sets `lastAnswerWasWrong` to `true`.
 - Card shown updates `lastSeenAt`.
 - Answer updates `lastReviewedAt`.
 
@@ -39,7 +40,7 @@ Scheduling logic is the core risk surface, so the suite focuses there. UI is int
 
 - Lower `level` produces a higher weight when other inputs are held equal.
 - Older `lastSeenAt` produces a higher weight when other inputs are held equal.
-- Higher wrong rate produces a higher weight when other inputs are held equal.
+- A word with `lastAnswerWasWrong == true` weighs exactly 5× an otherwise-identical word with `lastAnswerWasWrong == false`.
 - Under seeded RNG, jitter stays within `0.85…1.15`.
 
 ### Direction

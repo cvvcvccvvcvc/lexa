@@ -297,4 +297,28 @@ struct FreeReviewPickerTests {
         #expect(picker.queuedCount == 50)
         #expect(elapsed < 2.0)
     }
+
+    @Test("free review answer toggles lastAnswerWasWrong")
+    func freeReviewAnswerTogglesLastAnswerWasWrong() {
+        let now = Date(timeIntervalSince1970: 2_000_000)
+        let baseline = makeWord(level: 3, lastAnswerWasWrong: false)
+
+        let afterWrong = ReviewProgressRecorder.applyFreeReviewAnswer(.wrong, to: baseline, now: now)
+        #expect(afterWrong.lastAnswerWasWrong == true)
+
+        let afterCorrect = ReviewProgressRecorder.applyFreeReviewAnswer(.correct, to: afterWrong, now: now)
+        #expect(afterCorrect.lastAnswerWasWrong == false)
+    }
+
+    @Test("scheduled answer toggles lastAnswerWasWrong")
+    func scheduledAnswerTogglesLastAnswerWasWrong() {
+        let now = Date(timeIntervalSince1970: 2_000_000)
+        let baseline = makeWord(level: 3, lastAnswerWasWrong: false)
+
+        let afterWrong = ScheduledReviewScheduler.applyAnswer(.wrong, to: baseline, now: now)
+        #expect(afterWrong.lastAnswerWasWrong == true)
+
+        let afterCorrect = ScheduledReviewScheduler.applyAnswer(.correct, to: afterWrong, now: now)
+        #expect(afterCorrect.lastAnswerWasWrong == false)
+    }
 }

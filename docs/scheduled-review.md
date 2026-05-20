@@ -31,19 +31,21 @@ A word at level 0 is always due — there is no waiting room for brand-new words
 **Correct answer:**
 
 ```
-level         = min(9, level + 1)
-nextReviewAt  = now + intervalDays[level]
-correctCount += 1
-lastReviewedAt = now
+level               = min(9, level + 1)
+nextReviewAt        = now + intervalDays[level]
+correctCount       += 1
+lastAnswerWasWrong  = false
+lastReviewedAt      = now
 ```
 
 **Wrong answer:**
 
 ```
-level         = max(0, level - 1)
-nextReviewAt  = now + intervalDays[level]
-wrongCount   += 1
-lastReviewedAt = now
+level               = max(0, level - 1)
+nextReviewAt        = now + intervalDays[level]
+wrongCount         += 1
+lastAnswerWasWrong  = true
+lastReviewedAt      = now
 ```
 
 A word that drops to level 0 becomes due immediately because the level-0 interval is 0 days.
@@ -67,7 +69,7 @@ The scheduling test suite must cover:
 
 - Level clamping at both ends (`0` and `9`).
 - `nextReviewAt` calculation for every level, including drop-to-zero.
-- `correctCount` / `wrongCount` increments.
+- `correctCount` / `wrongCount` increments and `lastAnswerWasWrong` toggle on both answer types.
 - `lastSeenAt` / `lastReviewedAt` updates.
 - Direction alternation and seeded first-direction determinism.
 

@@ -26,7 +26,8 @@ func makeWord(
     lastReviewedAt: Date? = nil,
     lastDirection: ReviewDirection? = nil,
     correctCount: Int = 0,
-    wrongCount: Int = 0
+    wrongCount: Int = 0,
+    lastAnswerWasWrong: Bool = false
 ) -> VocabularyWord {
     VocabularyWord(
         id: id,
@@ -41,7 +42,8 @@ func makeWord(
         lastReviewedAt: lastReviewedAt,
         lastDirection: lastDirection,
         correctCount: correctCount,
-        wrongCount: wrongCount
+        wrongCount: wrongCount,
+        lastAnswerWasWrong: lastAnswerWasWrong
     )
 }
 

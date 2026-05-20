@@ -17,6 +17,7 @@ public struct VocabularyWord: Codable, Identifiable, Hashable, Sendable {
     public var lastDirection: ReviewDirection?
     public var correctCount: Int
     public var wrongCount: Int
+    public var lastAnswerWasWrong: Bool
 
     public init(
         id: UUID = UUID(),
@@ -31,7 +32,8 @@ public struct VocabularyWord: Codable, Identifiable, Hashable, Sendable {
         lastReviewedAt: Date? = nil,
         lastDirection: ReviewDirection? = nil,
         correctCount: Int = 0,
-        wrongCount: Int = 0
+        wrongCount: Int = 0,
+        lastAnswerWasWrong: Bool = false
     ) {
         self.id = id
         self.englishText = englishText
@@ -46,9 +48,32 @@ public struct VocabularyWord: Codable, Identifiable, Hashable, Sendable {
         self.lastDirection = lastDirection
         self.correctCount = max(0, correctCount)
         self.wrongCount = max(0, wrongCount)
+        self.lastAnswerWasWrong = lastAnswerWasWrong
     }
 
     public static func clampedLevel(_ level: Int) -> Int {
         min(maximumLevel, max(minimumLevel, level))
+    }
+
+    public init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        let createdAt = try container.decode(Date.self, forKey: .createdAt)
+
+        self.init(
+            id: try container.decode(UUID.self, forKey: .id),
+            englishText: try container.decode(String.self, forKey: .englishText),
+            russianTranslation: try container.decode(String.self, forKey: .russianTranslation),
+            comment: try container.decode(String.self, forKey: .comment),
+            level: try container.decode(Int.self, forKey: .level),
+            createdAt: createdAt,
+            updatedAt: try container.decodeIfPresent(Date.self, forKey: .updatedAt),
+            nextReviewAt: try container.decodeIfPresent(Date.self, forKey: .nextReviewAt),
+            lastSeenAt: try container.decodeIfPresent(Date.self, forKey: .lastSeenAt),
+            lastReviewedAt: try container.decodeIfPresent(Date.self, forKey: .lastReviewedAt),
+            lastDirection: try container.decodeIfPresent(ReviewDirection.self, forKey: .lastDirection),
+            correctCount: try container.decode(Int.self, forKey: .correctCount),
+            wrongCount: try container.decode(Int.self, forKey: .wrongCount),
+            lastAnswerWasWrong: try container.decodeIfPresent(Bool.self, forKey: .lastAnswerWasWrong) ?? false
+        )
     }
 }
