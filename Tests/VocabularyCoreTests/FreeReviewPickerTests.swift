@@ -141,13 +141,16 @@ struct FreeReviewPickerTests {
         #expect(FreeReviewScorer.weight(for: old, now: now) > FreeReviewScorer.weight(for: recent, now: now))
     }
 
-    @Test("wrong-heavy word gets a small priority boost")
-    func wrongHeavyWordScoresHigher() {
+    @Test("word with last answer wrong gets a five-times priority boost")
+    func lastAnswerWrongWordScoresHigher() {
         let now = Date(timeIntervalSince1970: 2_000_000)
-        let wrongHeavy = makeWord(level: 5, lastSeenAt: now.addingTimeInterval(-86_400), correctCount: 1, wrongCount: 9)
-        let correctHeavy = makeWord(level: 5, lastSeenAt: now.addingTimeInterval(-86_400), correctCount: 9, wrongCount: 1)
+        let wrong = makeWord(level: 5, lastSeenAt: now.addingTimeInterval(-86_400), lastAnswerWasWrong: true)
+        let correct = makeWord(level: 5, lastSeenAt: now.addingTimeInterval(-86_400), lastAnswerWasWrong: false)
 
-        #expect(FreeReviewScorer.weight(for: wrongHeavy, now: now) > FreeReviewScorer.weight(for: correctHeavy, now: now))
+        let wrongWeight = FreeReviewScorer.weight(for: wrong, now: now)
+        let correctWeight = FreeReviewScorer.weight(for: correct, now: now)
+
+        #expect(abs(wrongWeight - correctWeight * 5.0) < 0.000_000_001)
     }
 
     @Test("jitter stays inside expected bounds")
@@ -228,7 +231,7 @@ struct FreeReviewPickerTests {
         picker.refill(from: words, now: now)
 
         let ids = picker.queue
-        #expect(ids.count == 50)
+        #expect(ids.count == 20)
 
         for index in 0...(ids.count - 10) {
             let window = ids[index..<(index + 10)]
@@ -294,7 +297,7 @@ struct FreeReviewPickerTests {
         picker.refill(from: words, now: now)
         let elapsed = Date().timeIntervalSince(start)
 
-        #expect(picker.queuedCount == 50)
+        #expect(picker.queuedCount == 20)
         #expect(elapsed < 2.0)
     }
 

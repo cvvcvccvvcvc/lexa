@@ -18,8 +18,7 @@ public enum FreeReviewScorer {
         let days = daysSince(lastSeenAtOverride ?? word.lastSeenAt, now: now)
         let levelBoost = 1.0 + 0.35 * Double(VocabularyWord.maximumLevel - word.level)
         let ageBoost = 1.0 + log2(1.0 + days)
-        let wrongRate = Double(word.wrongCount + 1) / Double(word.correctCount + word.wrongCount + 2)
-        let errorBoost = 1.0 + 0.5 * wrongRate
+        let errorBoost: Double = word.lastAnswerWasWrong ? 5.0 : 1.0
 
         return max(0.0001, levelBoost * ageBoost * errorBoost * jitter)
     }

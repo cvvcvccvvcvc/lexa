@@ -4,12 +4,12 @@ public struct FreeReviewConfiguration: Sendable {
     public var batchSize: Int
     public var refillThreshold: Int
 
-    public init(batchSize: Int = 50, refillThreshold: Int = 10) {
+    public init(batchSize: Int = 20, refillThreshold: Int = 5) {
         self.batchSize = max(1, batchSize)
         self.refillThreshold = max(0, refillThreshold)
     }
 
-    public static let mvp = FreeReviewConfiguration(batchSize: 50, refillThreshold: 10)
+    public static let mvp = FreeReviewConfiguration(batchSize: 20, refillThreshold: 5)
 }
 
 public struct FreeReviewPicker<RNG: ReviewRandomGenerator> {
